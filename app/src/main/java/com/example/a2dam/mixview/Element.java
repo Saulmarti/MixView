@@ -1,12 +1,14 @@
 package com.example.a2dam.mixview;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.RatingBar;
 
 /**
  * Created by 2dam on 28/11/2017.
  */
 
-public class Element {
+public class Element implements Parcelable {
     private String nombre,direccion;
     private float puntiacio,precio;
     private int imagen;
@@ -58,4 +60,31 @@ public class Element {
     public void setPrecio(float precio) {
         this.precio = precio;
     }
+
+    protected Element(Parcel in) {
+        imagen = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(imagen);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Element> CREATOR = new Parcelable.Creator<Element>() {
+        @Override
+        public Element createFromParcel(Parcel in) {
+            return new Element(in);
+        }
+
+        @Override
+        public Element[] newArray(int size) {
+            return new Element[size];
+        }
+    };
 }
